@@ -91,7 +91,7 @@ class Redirect extends AbstractHelper
 
         if ($tablet) {
             $this->responseFactory->create()->setRedirect($tablet)->sendResponse();
-            exit();
+            return;
         }
 
     }
@@ -106,7 +106,7 @@ class Redirect extends AbstractHelper
 
         if ($mobile) {
             $this->responseFactory->create()->setRedirect($mobile)->sendResponse();
-            exit();
+            return;
         }
 
     }
@@ -121,7 +121,7 @@ class Redirect extends AbstractHelper
 
         if ($desktop) {
             $this->responseFactory->create()->setRedirect($desktop)->sendResponse();
-            exit();
+            return;
         }
     }
 
