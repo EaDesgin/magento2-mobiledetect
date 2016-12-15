@@ -67,10 +67,11 @@ class DesignExceptions extends InitialDesignExceptions
     {
 
         if (!$this->redirect->isEnable()){
-            return;
+            return $proceed;
         }
 
-            $userAgent = $request->getServer('HTTP_USER_AGENT');
+        $userAgent = $request->getServer('HTTP_USER_AGENT');
+
         if (empty($userAgent)) {
             return false;
         }
@@ -87,7 +88,7 @@ class DesignExceptions extends InitialDesignExceptions
         );
 
         if (!$expressions) {
-            return false;
+            return $proceed;
         }
 
         $expressions = unserialize($expressions);
