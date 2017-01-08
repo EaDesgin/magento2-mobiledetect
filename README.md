@@ -22,7 +22,7 @@ You can install the module via composer or manually by adding it to the app/code
 
 Via composer
 
-- composer config repositories.magento2-mobiledetect git git@github.com:EaDesgin/magento2-warehouses;
+- composer config repositories.magento2-mobiledetect git git@github.com:EaDesgin/magento2-mobiledetect;
 - sudo composer require eadesignro/module-mobiledetect;
 - php bin/magento setup:upgrade;
 
