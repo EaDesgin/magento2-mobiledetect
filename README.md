@@ -1,4 +1,4 @@
-# Magento 2 Mobile detect system
+# Magento 2 Mobile Detect Theme Change
 
 Magento 2 Mobile detect system can be used to load different themes base on the client device (desktop, tablet, mobile).
 It uses the library https://github.com/serbanghita/Mobile-Detect.
