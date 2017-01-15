@@ -29,3 +29,7 @@ Via composer
 # Uninstall 
 
 You need to remove the module. 
+
+#Video install and use
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/yTShSamaB3Q/0.jpg)](https://www.youtube.com/watch?v=yTShSamaB3Q)
