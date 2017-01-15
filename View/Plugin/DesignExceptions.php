@@ -67,7 +67,7 @@ class DesignExceptions extends InitialDesignExceptions
     {
 
         if (!$this->redirect->isEnable()){
-            return $proceed;
+            return false;
         }
 
         $userAgent = $request->getServer('HTTP_USER_AGENT');
@@ -79,7 +79,7 @@ class DesignExceptions extends InitialDesignExceptions
         $exception = $this->ifThemeChange();
 
         if (!$exception) {
-            return $proceed;
+            return false;
         }
 
         $expressions = $subject->scopeConfig->getValue(
@@ -88,7 +88,7 @@ class DesignExceptions extends InitialDesignExceptions
         );
 
         if (!$expressions) {
-            return $proceed;
+            return false;
         }
 
         $expressions = unserialize($expressions);
@@ -98,7 +98,7 @@ class DesignExceptions extends InitialDesignExceptions
             }
         }
 
-        return $proceed;
+        return false;
     }
 
     /**
