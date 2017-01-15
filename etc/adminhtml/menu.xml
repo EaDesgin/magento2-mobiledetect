@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * EaDesgin
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@eadesign.ro so we can send you a copy immediately.
+ *
+ * @category    eadesigndev_Mobiledetect
+ * @copyright   Copyright (c) 2008-2016 EaDesign by Eco Active S.R.L.
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+    	<add id="Eadesigndev_Mobiledetect::main"
+             title="Mobile Detect"
+             module="Eadesigndev_Mobiledetect"
+             sortOrder="10"
+             resource="Eadesigndev_Mobiledetect::settings"
+             parent="Eadesigndev_Eacore::eadesign"/>
+
+        <add id="Eadesigndev_Mobiledetect::menus"
+             title="Settings"
+             module="Eadesigndev_Mobiledetect"
+             sortOrder="10"
+             parent="Eadesigndev_Mobiledetect::main"
+             action="adminhtml/system_config/edit/section/eadesign_mobiledetect"
+             resource="Eadesigndev_Mobiledetect::settings"/>
+
+        <add id="Eadesigndev_Mobiledetect::themes"
+             title="Theme Settings"
+             module="Eadesigndev_Mobiledetect"
+             sortOrder="1"
+             parent="Eadesigndev_Mobiledetect::main"
+             action="theme/design_config/index"
+             resource="Eadesigndev_Mobiledetect::settings"/>
+    </menu>
+</config>
