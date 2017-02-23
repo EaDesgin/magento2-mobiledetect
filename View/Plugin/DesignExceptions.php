@@ -20,10 +20,10 @@
 namespace Eadesigndev\Mobiledetect\View\Plugin;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\Request\Http as HttpRequest;
 use Magento\Framework\View\DesignExceptions as InitialDesignExceptions;
 use Eadesigndev\Mobiledetect\Helper\Detect;
 use Eadesigndev\Mobiledetect\Helper\Redirect;
-
 
 class DesignExceptions extends InitialDesignExceptions
 {
@@ -36,6 +36,11 @@ class DesignExceptions extends InitialDesignExceptions
      * @var Redirect
      */
     private $redirect;
+
+    /**
+     * @var string
+     */
+    private $userAgent;
 
     /**
      * DesignExceptions constructor.
@@ -61,22 +66,24 @@ class DesignExceptions extends InitialDesignExceptions
     /**
      * @param $subject
      * @param $proceed
-     * @param \Magento\Framework\App\Request\Http $request
-     * @return bool
+     * @param HttpRequest $request
+     * @return bool|string
      */
-    public function aroundGetThemeByRequest($subject, $proceed, \Magento\Framework\App\Request\Http $request)
+    public function aroundGetThemeByRequest($subject, $proceed, HttpRequest $request)
     {
-
-        $defaultSystem = $this->getThemeByRequestDefault($request);
-
-        if (!$this->redirect->isEnable()){
-            return $defaultSystem;
-        }
 
         $userAgent = $request->getServer('HTTP_USER_AGENT');
 
         if (empty($userAgent)) {
             return false;
+        }
+
+        $this->userAgent = $userAgent;
+
+        $defaultSystem = $this->getThemeByRequestDefault();
+
+        if (!$this->redirect->isEnable()) {
+            return $defaultSystem;
         }
 
         $exception = $this->ifThemeChange();
@@ -85,9 +92,9 @@ class DesignExceptions extends InitialDesignExceptions
             return $defaultSystem;
         }
 
-        $expressions = $subject->scopeConfig->getValue(
-            $subject->exceptionConfigPath,
-            $subject->scopeType
+        $expressions = $this->scopeConfig->getValue(
+            $this->exceptionConfigPath,
+            $this->scopeType
         );
 
         if (!$expressions) {
@@ -101,11 +108,12 @@ class DesignExceptions extends InitialDesignExceptions
             }
         }
 
+
         return $defaultSystem;
     }
 
     /**
-     * The tablet is overwriten by the mobile
+     * The tablet is overwritten by the mobile
      *
      * @return bool
      */
@@ -113,36 +121,29 @@ class DesignExceptions extends InitialDesignExceptions
     {
         if ($this->detect->isTablet()) {
             $this->redirect->redirectTablet();
-            $exception = $this->detect->getDetected();
-            return $exception;
         }
 
         if ($this->detect->isMobile()) {
             $this->redirect->redirectMobile();
-            $exception = $this->detect->getDetected();
-            return $exception;
         }
 
         if ($this->detect->isDesktop()) {
             $this->redirect->redirectDesktop();
-            $exception = $this->detect->getDetected();
-            return $exception;
         }
+
+        $exception = $this->detect->getDetected();
+        
+        return $exception;
+
     }
 
     /**
      * Get theme that should be applied for current user-agent according to design exceptions configuration
      *
-     * @param \Magento\Framework\App\Request\Http $request
      * @return string|bool
      */
-    public function getThemeByRequestDefault(\Magento\Framework\App\Request\Http $request)
+    public function getThemeByRequestDefault()
     {
-        $userAgent = $request->getServer('HTTP_USER_AGENT');
-        if (empty($userAgent)) {
-            return false;
-        }
-
         $expressions = $this->scopeConfig->getValue(
             $this->exceptionConfigPath,
             $this->scopeType
@@ -154,7 +155,7 @@ class DesignExceptions extends InitialDesignExceptions
 
         $expressions = unserialize($expressions);
         foreach ($expressions as $rule) {
-            if (preg_match($rule['regexp'], $userAgent)) {
+            if (preg_match($rule['regexp'], $this->userAgent)) {
                 return $rule['value'];
             }
         }

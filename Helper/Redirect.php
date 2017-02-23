@@ -22,6 +22,7 @@ namespace Eadesigndev\Mobiledetect\Helper;
 
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\Url\Validator;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\App\ResponseFactory;
 
@@ -44,16 +45,31 @@ class Redirect extends AbstractHelper
      */
     private $config;
 
+    /**
+     * @var ResponseFactory
+     */
     private $responseFactory;
+
+    /**
+     * @var Validator
+     */
+    private $validator;
 
     /**
      * Redirect constructor.
      * @param Context $context
+     * @param ResponseFactory $responseFactory
+     * @param Validator $validator
      */
-    public function __construct(Context $context, ResponseFactory $responseFactory)
+    public function __construct(
+        Context $context,
+        ResponseFactory $responseFactory,
+        Validator $validator
+    )
     {
         $this->config = $context->getScopeConfig();
         $this->responseFactory = $responseFactory;
+        $this->validator = $validator;
         parent::__construct($context);
     }
 
@@ -89,9 +105,8 @@ class Redirect extends AbstractHelper
 
         $tablet = $this->getConfig(self::MOBILEDETECT_TABLET);
 
-        if ($tablet) {
+        if ($this->validator->isValid($tablet)) {
             $this->responseFactory->create()->setRedirect($tablet)->sendResponse();
-            return;
         }
 
     }
@@ -104,9 +119,8 @@ class Redirect extends AbstractHelper
 
         $mobile = $this->getConfig(self::MOBILEDETECT_MOBILE);
 
-        if ($mobile) {
+        if ($this->validator->isValid($mobile)) {
             $this->responseFactory->create()->setRedirect($mobile)->sendResponse();
-            return;
         }
 
     }
@@ -119,9 +133,8 @@ class Redirect extends AbstractHelper
 
         $desktop = $this->getConfig(self::MOBILEDETECT_TABLET);
 
-        if ($desktop) {
+        if ($this->validator->isValid($desktop)) {
             $this->responseFactory->create()->setRedirect($desktop)->sendResponse();
-            return;
         }
     }
 
