@@ -19,7 +19,6 @@
 
 namespace Eadesigndev\Mobiledetect\Helper;
 
-
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\Url\Validator;
@@ -65,8 +64,7 @@ class Redirect extends AbstractHelper
         Context $context,
         ResponseFactory $responseFactory,
         Validator $validator
-    )
-    {
+    ) {
         $this->config = $context->getScopeConfig();
         $this->responseFactory = $responseFactory;
         $this->validator = $validator;
@@ -108,7 +106,6 @@ class Redirect extends AbstractHelper
         if ($this->validator->isValid($tablet)) {
             $this->responseFactory->create()->setRedirect($tablet)->sendResponse();
         }
-
     }
 
     /**
@@ -122,7 +119,6 @@ class Redirect extends AbstractHelper
         if ($this->validator->isValid($mobile)) {
             $this->responseFactory->create()->setRedirect($mobile)->sendResponse();
         }
-
     }
 
     /**
@@ -137,5 +133,4 @@ class Redirect extends AbstractHelper
             $this->responseFactory->create()->setRedirect($desktop)->sendResponse();
         }
     }
-
 }

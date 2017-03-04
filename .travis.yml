@@ -1,0 +1,25 @@
+language: php
+
+sudo: false
+
+php:
+    - 5.6
+    - 7.0
+
+install:
+    - echo "{\"http-basic\":{\"repo.magento.com\":{\"username\":\"${MAGENTO_USERNAME}\",\"password\":\"${MAGENTO_PASSWORD}\"}}}" > auth.json
+    - composer install --prefer-dist
+
+script:
+    - php vendor/bin/phpcs --standard=PSR2 View/ Helper/ Test/
+    - php vendor/bin/phpmd View/ Helper/ Test/ text cleancode,codesize,controversial,design,naming,unusedcode
+    - php vendor/bin/phpcpd View/ Helper/ Test/
+    - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+
+after_script:
+    - php vendor/bin/coveralls
+
+env:
+    global:
+        - secure: "4uz57Fkoti3eVQrQNu+U43lmdvdayfiQyzVmJM7tB8Vl0wS+c2tcInIsJoK4tqHGz+X/sLrfZVP2k3abgRD/oOamY8wyFpaMudqZIIHdQcj27zjGWOLLwstRfgu+59xwqft9Wx9BkvwYKrzTWJj+2atwdXqIYmZzOZs7blxvrINMeKXX7ktysj53LfWKnNVME6xncRplwe3dEVsMb43dl4yeK1K+0yTFYG4U9Fpuc+dnWNjioqSiyyLwPxFOGP8cOE83Tm8durcPXcE8YZVZSSKN9ww7rfL3eorNDC5cYnlMc/VJKzhIyv7+dVzRG9Yrx+GaVbWxPyQ2UECCxSVJZSzvXizCa6i9TVgfn92uvC+K8O4KkcOqGGOPp4qToDsygZDhn7rQb72pep3wzH7OvcFMYjSx1cNoFbgmi2jQevLuIjkoMqQftKNHUEg9CBsNiEnzBwktdg35gbfs8o/xTD1EshNPI0izBZdvL0O2BEOfjyYSuP04bUL6McvZcNSQKTndhbxCdWYDA6TIuNwmqxPGgfRIsGmwA2IuV+/zDycH8+Aa0rIMOv7MhjFG9mZR9+BLzzSktoCRuhHzECDL2/58M/ToJms9jfaGBYLQr1wQN9vmpVC9qTkP/7kLRH9HvkXHEkOyTuaKmVOsvdMXN0ad3YKEtdonARvAFf/vjpc="
+        - secure: "JOjMlmplG2UsR9slIRB85kJWEnS8cCDqulg9Jp219Ef79wDWPwnBbKlcBxaKwmiRexJLuQOlmJ9K16YDM98oO/WY86iTVaHBQSHKDON8PR+eEjysRuwXjeNpx3Q3496Iu55TmvBAxOZwmvCkAiu7Rc7F5NjQMcBTYMXMT3lTXFVK1Hoa9FQlgKRowkciTSvCCZ3te6Zx0c+3hyKeMEihv17T0BopyBoo3HoLnPwDXTbhoum8Bjdtz7lEA4xZJkHh9ukhCDimVvVq54mvHYfo/ujI4ZDH9nI6y1K0n8ScgXi+BZOLgs4wNIm0NekbspyN9cYv+HmC6GMFLLOJwvOuN7CN43CH++/Oud0nDTrNAFIk7aYRe8+Xq3OxJfA+N+2vkAJxgl+KgagWdzdPt58UrDicsQFRj5pHhCSfXyb44IPymAFouOPeS4dMkrlIh7KI3POnJ0/OgDYtw1DhuiTQyP+t3OsYytVK0QyYLg54sfzfdMGHaEEBJt53iTOEkVtHDsVA++9rU4UbQN3U6FwhzWH11aUi+to1VBRzg95PxuQDGF3xlrDIytyDZH1Fx2Qy2dWr0y5xwrGb+l2TNwiCiViwt/AiN8997n6fCYodP1OaNUCrXJPmwavVST2MF5o320avvXAJmlvuMFLnbzgUp+JLBf0Kr5fVqeSnrtVGMIY="

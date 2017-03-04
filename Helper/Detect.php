@@ -19,7 +19,6 @@
 
 namespace Eadesigndev\Mobiledetect\Helper;
 
-
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Detection\MobileDetect;
@@ -107,5 +106,4 @@ class Detect extends AbstractHelper
     {
         return $this->mobileDetect;
     }
-
 }

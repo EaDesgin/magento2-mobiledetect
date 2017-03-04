@@ -56,8 +56,7 @@ class DesignExceptions extends InitialDesignExceptions
         $scopeType,
         Detect $detect,
         Redirect $redirect
-    )
-    {
+    ) {
         parent::__construct($scopeConfig, $exceptionConfigPath, $scopeType);
         $this->detect = $detect;
         $this->redirect = $redirect;
@@ -102,12 +101,12 @@ class DesignExceptions extends InitialDesignExceptions
         }
 
         $expressions = unserialize($expressions);
+
         foreach ($expressions as $rule) {
             if (preg_match($rule['regexp'], $exception)) {
                 return $rule['value'];
             }
         }
-
 
         return $defaultSystem;
     }
@@ -132,9 +131,8 @@ class DesignExceptions extends InitialDesignExceptions
         }
 
         $exception = $this->detect->getDetected();
-        
-        return $exception;
 
+        return $exception;
     }
 
     /**
@@ -154,6 +152,7 @@ class DesignExceptions extends InitialDesignExceptions
         }
 
         $expressions = unserialize($expressions);
+
         foreach ($expressions as $rule) {
             if (preg_match($rule['regexp'], $this->userAgent)) {
                 return $rule['value'];
@@ -162,6 +161,4 @@ class DesignExceptions extends InitialDesignExceptions
 
         return false;
     }
-
-
 }

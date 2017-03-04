@@ -50,12 +50,12 @@ class MobiledetectPluginTest extends \PHPUnit_Framework_TestCase
     /**
      * @var string
      */
-    protected $exceptionConfigPath = 'exception_path';
+    private $exceptionConfigPath = 'exception_path';
 
     /**
      * @var string
      */
-    protected $scopeType = 'scope_type';
+    private $scopeType = 'scope_type';
 
     /**
      * @var $subject \Magento\Framework\View\DesignExceptions
@@ -70,7 +70,7 @@ class MobiledetectPluginTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManager = ObjectManager::getInstance();
 
-        $this->requestMock = $this->getMockBuilder(Http::class, [], [], '', false)
+        $this->requestMock = $this->getMockBuilder(Http::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -95,7 +95,6 @@ class MobiledetectPluginTest extends \PHPUnit_Framework_TestCase
             $this->detectHelper,
             $this->redirectHelper
         );
-
     }
 
     /**
@@ -123,7 +122,10 @@ class MobiledetectPluginTest extends \PHPUnit_Framework_TestCase
                 ->will($this->returnValue(serialize($expressions)));
         }
 
-        $this->assertSame($result, $this->designExceptions->aroundGetThemeByRequest($this->subject, $this, $this->requestMock));
+        $this->assertSame(
+            $result,
+            $this->designExceptions->aroundGetThemeByRequest($this->subject, $this, $this->requestMock)
+        );
     }
 
     /**
@@ -149,8 +151,14 @@ class MobiledetectPluginTest extends \PHPUnit_Framework_TestCase
      * @param array $expressions
      * @dataProvider getIfModuleIfMobileException
      */
-    public function testIfModuleIfMobileException($userAgent, $case, $ifMobileString, $useConfig, $result, $expressions = [])
-    {
+    public function testIfModuleIfMobileException(
+        $userAgent,
+        $case,
+        $ifMobileString,
+        $useConfig,
+        $result,
+        $expressions = []
+    ) {
 
         $this->redirectHelper
             ->method('isEnable')
@@ -174,9 +182,11 @@ class MobiledetectPluginTest extends \PHPUnit_Framework_TestCase
                 ->will($this->returnValue(serialize($expressions)));
         }
 
-        $this->assertSame($result, $this->designExceptions->aroundGetThemeByRequest($this->subject, $this, $this->requestMock));
+        $this->assertSame(
+            $result,
+            $this->designExceptions->aroundGetThemeByRequest($this->subject, $this, $this->requestMock)
+        );
     }
-
 
     /**
      * @return array
@@ -190,9 +200,15 @@ class MobiledetectPluginTest extends \PHPUnit_Framework_TestCase
             ['iphone', 'Tablet', Detect::EA_TABLET, true, false],
             ['iphone', 'Desktop', Detect::EA_DESKTOP, false, false],
             ['iphone', 'Desktop', Detect::EA_DESKTOP, true, false],
-            ['iphone', 'Mobile', Detect::EA_MOBILE, true, 'matched', [['regexp' => '/' . Detect::EA_MOBILE . '/', 'value' => 'matched']]],
-            ['explorer', 'Tablet', Detect::EA_TABLET, true, 'matched', [['regexp' => '/' . Detect::EA_TABLET . '/', 'value' => 'matched']]],
-            ['explorer', 'Desktop', Detect::EA_DESKTOP, true, 'matched', [['regexp' => '/' . Detect::EA_DESKTOP . '/', 'value' => 'matched']]],
+            ['iphone', 'Mobile', Detect::EA_MOBILE, true, 'matched',
+                [['regexp' => '/' . Detect::EA_MOBILE . '/', 'value' => 'matched']]
+            ],
+            ['explorer', 'Tablet', Detect::EA_TABLET, true, 'matched',
+                [['regexp' => '/' . Detect::EA_TABLET . '/', 'value' => 'matched']]
+            ],
+            ['explorer', 'Desktop', Detect::EA_DESKTOP, true, 'matched',
+                [['regexp' => '/' . Detect::EA_DESKTOP . '/', 'value' => 'matched']]
+            ],
         ];
     }
 
