@@ -12,11 +12,9 @@ install:
     - ls -l
 
 script:
-    - php vendor/bin/phpcs --standard=PSR2 vendor/eadesignro/module-mobiledetect/View/ vendor/eadesignro/module-mobiledetect/Helper/ vendor/eadesignro/module-mobiledetect/Test/
-    - php vendor/bin/phpmd vendor/eadesignro/module-mobiledetect/View/,vendor/eadesignro/module-mobiledetect/Helper/,vendor/eadesignro/module-mobiledetect/Test/ text cleancode,codesize,controversial,design,naming,unusedcode
-    - php vendor/bin/phpcpd vendor/eadesignro/module-mobiledetect/View/ vendor/eadesignro/module-mobiledetect/Helper/ vendor/eadesignro/module-mobiledetect/Test/
-
-    - ls -l
+    - php vendor/bin/phpcs --standard=PSR2 View/ Helper/ Test/
+    - php vendor/bin/phpmd View/,Helper/,Test/ text cleancode,codesize,controversial,design,naming,unusedcode
+    - php vendor/bin/phpcpd View/ Helper/ Test/
 
 env:
     global:
