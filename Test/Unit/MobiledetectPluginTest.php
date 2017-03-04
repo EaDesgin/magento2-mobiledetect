@@ -7,8 +7,8 @@ use Eadesigndev\Mobiledetect\Helper\Redirect;
 use Eadesigndev\Mobiledetect\View\Plugin\DesignExceptions;
 use Magento\Framework\View\DesignExceptions as InitialDesignExceptions;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\App\Request\Http;
+use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 
 /**
  * Copyright © 2017 EaDesign by Eco Active S.R.L. All rights reserved.
@@ -69,7 +69,7 @@ class MobiledetectPluginTest extends \PHPUnit_Framework_TestCase
     public function setup()
     {
 
-        $this->objectManager = ObjectManager::getInstance();
+        $this->objectManager = new ObjectManager($this);
 
         $this->requestMock = $this->getMockBuilder(Http::class)
             ->disableOriginalConstructor()
@@ -87,7 +87,7 @@ class MobiledetectPluginTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->subject = $this->objectManager->create(InitialDesignExceptions::class);
+        $this->subject = $this->objectManager->getObject(InitialDesignExceptions::class);
 
         $this->designExceptions = new DesignExceptions(
             $this->scopeConfigInterface,
