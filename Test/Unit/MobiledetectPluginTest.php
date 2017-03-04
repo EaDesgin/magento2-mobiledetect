@@ -1,6 +1,6 @@
 <?php
 
-namespace Eadesigndev\Mobiledetect\Test\Integration;
+namespace Eadesigndev\Mobiledetect\Test\Unit;
 
 use Eadesigndev\Mobiledetect\Helper\Detect;
 use Eadesigndev\Mobiledetect\Helper\Redirect;
