@@ -16,10 +16,6 @@ script:
     - php vendor/bin/phpcpd View/ Helper/ Test/
     - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
-before_script:
-- composer self-update
-- echo "{\"http-basic\":{\"repo.magento.com\":{\"username\":\"${MAGENTO_USERNAME}\",\"password\":\"${MAGENTO_PASSWORD}\"}}}" > auth.json
-
 after_script:
     - php vendor/bin/coveralls
 
