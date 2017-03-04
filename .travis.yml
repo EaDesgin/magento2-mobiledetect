@@ -17,7 +17,7 @@ script:
     - php vendor/bin/phpcs --standard=PSR2 View/ Helper/ Test/
     - php vendor/bin/phpmd View/,Helper/,Test/ text cleancode,codesize,controversial,design,naming,unusedcode
     - php vendor/bin/phpcpd View/ Helper/ Test/
-    - php vendor/bin/phpunit -c magento/dev/tests/unit/phpunit.xml.dist Test/
+    - php magento/vendor/bin/phpunit -c magento/dev/tests/unit/phpunit.xml.dist Test/
 
 env:
     global:
