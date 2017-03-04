@@ -9,11 +9,14 @@ php:
 install:
     - echo "{\"http-basic\":{\"repo.magento.com\":{\"username\":\"${MAGENTO_USERNAME}\",\"password\":\"${MAGENTO_PASSWORD}\"}}}" > ~/.composer/auth.json
     - composer install --prefer-dist
+    - ls -l
 
 script:
     - php vendor/bin/phpcs --standard=PSR2 vendor/eadesignro/module-mobiledetect/View/ vendor/eadesignro/module-mobiledetect/Helper/ vendor/eadesignro/module-mobiledetect/Test/
-    - php vendor/bin/phpmd vendor/eadesignro/module-mobiledetect/View/ vendor/eadesignro/module-mobiledetect/Helper/ vendor/eadesignro/module-mobiledetect/Test/ text cleancode,codesize,controversial,design,naming,unusedcode
+    - php vendor/bin/phpmd vendor/eadesignro/module-mobiledetect/View/,vendor/eadesignro/module-mobiledetect/Helper/,vendor/eadesignro/module-mobiledetect/Test/ text cleancode,codesize,controversial,design,naming,unusedcode
     - php vendor/bin/phpcpd vendor/eadesignro/module-mobiledetect/View/ vendor/eadesignro/module-mobiledetect/Helper/ vendor/eadesignro/module-mobiledetect/Test/
+
+    - ls -l
 
 env:
     global:
