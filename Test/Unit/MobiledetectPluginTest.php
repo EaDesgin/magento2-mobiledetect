@@ -64,6 +64,7 @@ class MobiledetectPluginTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Setup the testing environment
+     * @SuppressWarnings("StaticAccess")
      */
     public function setup()
     {
@@ -172,7 +173,7 @@ class MobiledetectPluginTest extends \PHPUnit_Framework_TestCase
             ->willReturn(true);
 
         $this->detectHelper->expects($this->once())
-            ->method('getDetected')
+            ->method('isDetected')
             ->willReturn($ifMobileString);
 
         if ($useConfig) {

@@ -67,6 +67,7 @@ class DesignExceptions extends InitialDesignExceptions
      * @param $proceed
      * @param HttpRequest $request
      * @return bool|string
+     * @SuppressWarnings("unused")
      */
     public function aroundGetThemeByRequest($subject, $proceed, HttpRequest $request)
     {
@@ -130,7 +131,7 @@ class DesignExceptions extends InitialDesignExceptions
             $this->redirect->redirectDesktop();
         }
 
-        $exception = $this->detect->getDetected();
+        $exception = $this->detect->isDetected();
 
         return $exception;
     }

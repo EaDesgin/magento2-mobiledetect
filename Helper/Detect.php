@@ -60,7 +60,7 @@ class Detect extends AbstractHelper
     /**
      * @return bool
      */
-    public function getDetected()
+    public function isDetected()
     {
         return $this->detected;
     }
