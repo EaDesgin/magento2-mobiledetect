@@ -11,6 +11,12 @@
       "Eadesigndev\\Mobiledetect\\": ""
     }
   },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://repo.magento.com/"
+    }
+  ],
   "license": [
     "AL-2.0"
   ],
