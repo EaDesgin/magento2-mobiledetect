@@ -117,15 +117,21 @@ class MobiledetectPluginTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($userAgent));
 
         if ($useConfig) {
-            $this->scopeConfigInterface->expects($this->once())
+            $this->scopeConfigInterface->expects($this->any())
                 ->method('getValue')
                 ->with($this->equalTo($this->exceptionConfigPath), $this->equalTo($this->scopeType))
                 ->will($this->returnValue(serialize($expressions)));
         }
 
+        $subject = $this->subject;
+
+        $proceed = function () use ($result) {
+            return $result;
+        };
+
         $this->assertSame(
             $result,
-            $this->designExceptions->aroundGetThemeByRequest($this->subject, $this, $this->requestMock)
+            $this->designExceptions->aroundGetThemeByRequest($subject, $proceed, $this->requestMock)
         );
     }
 
@@ -183,9 +189,15 @@ class MobiledetectPluginTest extends \PHPUnit_Framework_TestCase
                 ->will($this->returnValue(serialize($expressions)));
         }
 
+        $subject = $this->subject;
+
+        $proceed = function () use ($result) {
+            return $result;
+        };
+
         $this->assertSame(
             $result,
-            $this->designExceptions->aroundGetThemeByRequest($this->subject, $this, $this->requestMock)
+            $this->designExceptions->aroundGetThemeByRequest($subject, $proceed, $this->requestMock)
         );
     }
 

@@ -69,27 +69,26 @@ class DesignExceptions extends InitialDesignExceptions
      * @return bool|string
      * @SuppressWarnings("unused")
      */
-    public function aroundGetThemeByRequest($subject, $proceed, HttpRequest $request)
+    public function aroundGetThemeByRequest($subject, callable $proceed, HttpRequest $request)
     {
+        $rules = $proceed($request);
 
         $userAgent = $request->getServer('HTTP_USER_AGENT');
 
         if (empty($userAgent)) {
-            return false;
+            return $rules;
         }
 
         $this->userAgent = $userAgent;
 
-        $defaultSystem = $this->getThemeByRequestDefault();
-
         if (!$this->redirect->isEnable()) {
-            return $defaultSystem;
+            return $rules;
         }
 
         $exception = $this->ifThemeChange();
 
         if (!$exception) {
-            return $defaultSystem;
+            return $rules;
         }
 
         $expressions = $this->scopeConfig->getValue(
@@ -98,7 +97,7 @@ class DesignExceptions extends InitialDesignExceptions
         );
 
         if (!$expressions) {
-            return $defaultSystem;
+            return $rules;
         }
 
         $expressions = unserialize($expressions);
@@ -109,7 +108,7 @@ class DesignExceptions extends InitialDesignExceptions
             }
         }
 
-        return $defaultSystem;
+        return $rules;
     }
 
     /**
@@ -134,32 +133,5 @@ class DesignExceptions extends InitialDesignExceptions
         $exception = $this->detect->isDetected();
 
         return $exception;
-    }
-
-    /**
-     * Get theme that should be applied for current user-agent according to design exceptions configuration
-     *
-     * @return string|bool
-     */
-    public function getThemeByRequestDefault()
-    {
-        $expressions = $this->scopeConfig->getValue(
-            $this->exceptionConfigPath,
-            $this->scopeType
-        );
-
-        if (!$expressions) {
-            return false;
-        }
-
-        $expressions = unserialize($expressions);
-
-        foreach ($expressions as $rule) {
-            if (preg_match($rule['regexp'], $this->userAgent)) {
-                return $rule['value'];
-            }
-        }
-
-        return false;
     }
 }
