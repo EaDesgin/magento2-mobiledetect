@@ -21,6 +21,7 @@ namespace Eadesigndev\Mobiledetect\View\Plugin;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Request\Http as HttpRequest;
+use Magento\Framework\Unserialize\Unserialize;
 use Magento\Framework\View\DesignExceptions as InitialDesignExceptions;
 use Eadesigndev\Mobiledetect\Helper\Detect;
 use Eadesigndev\Mobiledetect\Helper\Redirect;
@@ -43,23 +44,31 @@ class DesignExceptions extends InitialDesignExceptions
     private $userAgent;
 
     /**
+     * @var Unserialize
+     */
+    private $unSerialize;
+
+    /**
      * DesignExceptions constructor.
      * @param ScopeConfigInterface $scopeConfig
      * @param string $exceptionConfigPath
      * @param string $scopeType
      * @param Detect $detect
      * @param Redirect $redirect
+     * @param Unserialize $unSerialize
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         $exceptionConfigPath,
         $scopeType,
         Detect $detect,
-        Redirect $redirect
+        Redirect $redirect,
+        Unserialize $unSerialize
     ) {
         parent::__construct($scopeConfig, $exceptionConfigPath, $scopeType);
         $this->detect = $detect;
         $this->redirect = $redirect;
+        $this->unSerialize = $unSerialize;
     }
 
     /**
@@ -69,6 +78,7 @@ class DesignExceptions extends InitialDesignExceptions
      * @return bool|string
      * @SuppressWarnings("unused")
      */
+    // @codingStandardsIgnoreLine
     public function aroundGetThemeByRequest($subject, callable $proceed, HttpRequest $request)
     {
         $rules = $proceed($request);
@@ -85,6 +95,10 @@ class DesignExceptions extends InitialDesignExceptions
             return $rules;
         }
 
+        $mobileDetect = $this->detect->getMobileDetect();
+        $mobileDetect->setHttpHeaders($request->getHeaders());
+        $mobileDetect->setUserAgent($userAgent);
+
         $exception = $this->ifThemeChange();
 
         if (!$exception) {
@@ -100,7 +114,7 @@ class DesignExceptions extends InitialDesignExceptions
             return $rules;
         }
 
-        $expressions = unserialize($expressions);
+        $expressions = $this->unSerialize->unserialize($expressions);
 
         foreach ($expressions as $rule) {
             if (preg_match($rule['regexp'], $exception)) {

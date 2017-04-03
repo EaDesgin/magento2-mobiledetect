@@ -21,7 +21,7 @@ namespace Eadesigndev\Mobiledetect\Helper;
 
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Helper\AbstractHelper;
-use Detection\MobileDetect;
+use Eadesigndev\Mobiledetect\Helper\MobileDetectModifier as MobileDetect;
 
 /**
  * Helper to be used for mobile detect and validations

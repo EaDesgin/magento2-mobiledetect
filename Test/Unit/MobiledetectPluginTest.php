@@ -5,10 +5,12 @@ namespace Eadesigndev\Mobiledetect\Test\Unit;
 use Eadesigndev\Mobiledetect\Helper\Detect;
 use Eadesigndev\Mobiledetect\Helper\Redirect;
 use Eadesigndev\Mobiledetect\View\Plugin\DesignExceptions;
+use Eadesigndev\Mobiledetect\Helper\MobileDetectModifier;
 use Magento\Framework\View\DesignExceptions as InitialDesignExceptions;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Request\Http;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
+use Magento\Framework\Unserialize\Unserialize;
 
 /**
  * Copyright © 2017 EaDesign by Eco Active S.R.L. All rights reserved.
@@ -76,6 +78,7 @@ class MobiledetectPluginTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->detectHelper = $this->getMockBuilder(Detect::class)
+            ->setMethods(['getMobileDetect', 'isMobile', 'isTablet','isDetected'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -89,12 +92,15 @@ class MobiledetectPluginTest extends \PHPUnit_Framework_TestCase
 
         $this->subject = $this->objectManager->getObject(InitialDesignExceptions::class);
 
+        $unSerialize = new Unserialize();
+
         $this->designExceptions = new DesignExceptions(
             $this->scopeConfigInterface,
             $this->exceptionConfigPath,
             $this->scopeType,
             $this->detectHelper,
-            $this->redirectHelper
+            $this->redirectHelper,
+            $unSerialize
         );
     }
 
@@ -174,6 +180,14 @@ class MobiledetectPluginTest extends \PHPUnit_Framework_TestCase
         $this->requestMock->method('getServer')
             ->with($this->equalTo('HTTP_USER_AGENT'))
             ->will($this->returnValue($userAgent));
+
+        $mobileDetectModifier = $this->getMockBuilder(MobileDetectModifier::class)
+            ->setMethods(['setHttpHeaders','setUserAgent'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->detectHelper->method('getMobileDetect')
+            ->will($this->returnValue($mobileDetectModifier));
 
         $this->detectHelper->method('is' . $case)
             ->willReturn(true);
