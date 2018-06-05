@@ -29,9 +29,9 @@
     }
   ],
   "require": {
-    "php": "~5.6.5|7.0.2|7.0.4|~7.0.6|~7.1.0",
+    "php": "~5.6.5|7.0.2|7.0.4|~7.0.6|7.0.25|~7.1.0|7.1.18",
     "magento/module-backend": "100.1.*|100.2.*",
-    "magento/framework": "100.1.*|100.2.*",
+    "magento/framework": "100.1.*|100.2.*|101.0.*",
     "magento/module-theme": "100.1.*|100.2.*",
     "eadesignro/module-eacore": "^0.0.4",
     "mobiledetect/mobiledetectlib": "2.8.*"
