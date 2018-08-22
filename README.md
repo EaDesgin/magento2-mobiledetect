@@ -2,8 +2,9 @@
 
 [![Build Status](https://travis-ci.org/EaDesgin/magento2-mobiledetect.svg?branch=master)](https://travis-ci.org/EaDesgin/magento2-mobiledetect)
 
-Magento 2 Mobile detect system can be used to load different themes base on the client device (desktop, tablet, mobile).
-It uses the library https://github.com/serbanghita/Mobile-Detect.
+ 
+Because the Siment module HttpHeaderThemeSwitch is currently https://github.com/siment/magento2-http-header-theme-switch
+we nare not longer maintaining this module.
 
 # How to use the module
 
