@@ -30,10 +30,10 @@
   ],
   "require": {
     "php": "~5.6.5|7.0.2|7.0.4|~7.0.6|7.0.25|~7.1.3|~7.2.0",
-    "magento/module-backend": "100.1.*|100.2.*",
-    "magento/framework": "100.1.*|100.2.*|101.0.*",
-    "magento/module-theme": "100.1.*|100.2.*",
-    "eadesignro/module-eacore": "^0.2.10",
+    "magento/module-backend": "100.1.*|101.0.*|100.2.*",
+    "magento/framework": "100.1.*|100.2.*|101.0.*|102.0.*",
+    "magento/module-theme": "100.1.*|100.2.*|101.0.*",
+    "eadesignro/module-eacore": "^0.2.6",
     "mobiledetect/mobiledetectlib": "2.8.*"
   },
   "require-dev": {
