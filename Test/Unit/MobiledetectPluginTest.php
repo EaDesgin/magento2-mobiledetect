@@ -11,12 +11,13 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Request\Http;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use Magento\Framework\Unserialize\Unserialize;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Copyright © 2017 EaDesign by Eco Active S.R.L. All rights reserved.
  * See LICENSE for license details.
  */
-class MobiledetectPluginTest extends \PHPUnit_Framework_TestCase
+class MobiledetectPluginTest extends TestCase
 {
 
     /**
