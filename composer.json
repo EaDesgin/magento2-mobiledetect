@@ -2,7 +2,7 @@
   "name": "eadesignro/module-mobiledetect",
   "description": "Magento 2 EaDesign Mobile Detect System",
   "type": "magento2-module",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "autoload": {
     "files": [
       "registration.php"
@@ -29,19 +29,22 @@
     }
   ],
   "require": {
-    "php": "~5.6.5|7.0.2|7.0.4|~7.0.6|7.0.25|~7.1.0|7.1.18",
+    "php": "~5.6.5|7.0.2|7.0.4|~7.0.6|7.0.25|~7.1.3|~7.2.0",
     "magento/module-backend": "100.1.*|100.2.*",
     "magento/framework": "100.1.*|100.2.*|101.0.*",
     "magento/module-theme": "100.1.*|100.2.*",
-    "eadesignro/module-eacore": "^0.0.4",
+    "eadesignro/module-eacore": "^0.0.9",
     "mobiledetect/mobiledetectlib": "2.8.*"
   },
   "require-dev": {
-    "phpunit/phpunit": "^4.8|~5.5.0",
-    "phpmd/phpmd": "^2.3",
-    "squizlabs/php_codesniffer": "^2.5",
-    "sebastian/phpcpd": "^2.0",
-    "satooshi/php-coveralls": "^1.0"
+    "friendsofphp/php-cs-fixer": "~2.13.0",
+    "lusitanian/oauth": "~0.8.10",
+    "magento/magento2-functional-testing-framework": "2.3.9",
+    "pdepend/pdepend": "2.5.2",
+    "phpmd/phpmd": "@stable",
+    "phpunit/phpunit": "~6.5.0",
+    "sebastian/phpcpd": "~3.0.0",
+    "squizlabs/php_codesniffer": "3.3.1"
   },
   "minimum-stability": "dev",
   "prefer-stable": true
